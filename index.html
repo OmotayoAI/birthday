@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday Judith</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+:root {
+  --ink: #04060e;
+  --navy: #0a1230;
+  --deep: #10204f;
+  --line: #1e2f66;
+  --text: #e9efff;
+  --muted: #93a2d0;
+  --accent: #6c9bff;
+  --glow: #a9c6ff;
+  --flame: #ffc46b;
+  --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --body: 'Figtree', 'Segoe UI', system-ui, sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--ink);
+  background-image:
+    radial-gradient(60rem 40rem at 50% -10%, #12255f 0%, transparent 60%),
+    radial-gradient(40rem 30rem at 100% 60%, #0b1a45 0%, transparent 60%);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  padding-inline: 1rem;
+  padding-block: 0 5rem;
+  overflow-x: hidden;
+}
+#stars { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+#confetti { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 50; pointer-events: none; }
+main { position: relative; z-index: 1; max-width: 44rem; margin-inline: auto; display: flex; flex-direction: column; gap: 5rem; }
+h1, h2, h3 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.05; letter-spacing: -0.02em; }
+p { margin: 0; }
+.eyebrow { font-size: 0.78rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+:focus-visible { outline: 3px solid var(--glow); outline-offset: 3px; border-radius: 0.5rem; }
+
+/* hero */
+.hero { padding-top: 3.5rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
+.orb { position: relative; width: min(17rem, 72vw); aspect-ratio: 3 / 4; }
+.orb::before { content: ''; position: absolute; inset: -1.2rem; border-radius: 50%; background: radial-gradient(closest-side, rgba(108,155,255,0.55), transparent 72%); filter: blur(14px); }
+.orb img { position: relative; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; border-radius: 48% 48% 1.5rem 1.5rem / 38% 38% 1.5rem 1.5rem; border: 1px solid rgba(169,198,255,0.5); box-shadow: 0 1.5rem 4rem rgba(0,0,0,0.6); }
+.hero h1 { font-size: clamp(2.8rem, 12vw, 5.6rem); font-weight: 800; }
+.hero h1 .name { display: block; color: var(--glow); }
+.hero p.sub { color: var(--muted); max-width: 30rem; }
+.btn { font: inherit; font-weight: 600; color: var(--ink); background: var(--glow); border: 0; border-radius: 999px; padding: 0.85rem 1.6rem; cursor: pointer; transition: transform .2s, background .2s; min-height: 2.75rem; }
+.btn:hover { background: #fff; transform: translateY(-2px); }
+.btn.ghost { background: transparent; color: var(--text); border: 1px solid var(--line); }
+.btn.ghost:hover { background: var(--deep); }
+
+/* section head */
+.head { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.75rem; }
+.head h2 { font-size: clamp(1.9rem, 7vw, 3rem); font-weight: 700; }
+
+/* videos */
+.reels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.reel { display: flex; flex-direction: column; gap: 0.6rem; min-width: 0; margin: 0; }
+.reel video { width: 100%; aspect-ratio: 9 / 16; object-fit: cover; background: var(--navy); border-radius: 1rem; border: 1px solid var(--line); display: block; }
+.reel figcaption { color: var(--muted); font-size: 0.95rem; }
+
+/* letter */
+.letter { background: linear-gradient(180deg, var(--navy), #070d22); border: 1px solid var(--line); border-radius: 1.25rem; padding: clamp(1.4rem, 5vw, 2.6rem); display: flex; flex-direction: column; gap: 1.1rem; }
+.letter h2 { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+.letter p { max-width: 60ch; }
+.sign { font-family: var(--display); font-weight: 700; font-size: 1.3rem; color: var(--glow); }
+
+/* flip cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 1rem; }
+.card { all: unset; box-sizing: border-box; display: block; cursor: pointer; perspective: 1000px; height: 11rem; border-radius: 1rem; }
+.card:focus-visible { outline: 3px solid var(--glow); outline-offset: 3px; }
+.card .inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+.card[aria-pressed="true"] .inner { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden; border-radius: 1rem; padding: 1.1rem 1.2rem; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--line); overflow: hidden; }
+.face.front { background: linear-gradient(160deg, var(--deep), var(--navy)); }
+.face.front h3 { font-size: 1.5rem; font-weight: 700; }
+.face.front span { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.face.back { transform: rotateY(180deg); background: var(--glow); color: var(--ink); justify-content: center; font-weight: 500; font-size: 1.02rem; line-height: 1.45; }
+
+/* 21 list */
+.list21 { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 0.2rem 2rem; counter-reset: n; }
+.list21 li { counter-increment: n; display: flex; gap: 1rem; align-items: baseline; padding: 0.85rem 0; border-bottom: 1px solid var(--line); min-width: 0; }
+.list21 li::before { content: counter(n); font-family: var(--display); font-weight: 800; font-size: 1.15rem; color: var(--accent); min-width: 1.8rem; font-variant-numeric: tabular-nums; }
+
+/* envelopes */
+.mail { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+.env { background: var(--navy); border: 1px solid var(--line); border-radius: 1rem; overflow: hidden; }
+.env button { all: unset; box-sizing: border-box; width: 100%; cursor: pointer; padding: 1.1rem 1.2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; font-family: var(--display); font-weight: 700; font-size: 1.15rem; min-height: 3.5rem; }
+.env button:hover { background: var(--deep); }
+.env button:focus-visible { outline: 3px solid var(--glow); outline-offset: -3px; }
+.env .chev { color: var(--accent); transition: transform .3s; flex: none; }
+.env[data-open="true"] .chev { transform: rotate(90deg); }
+.env .note { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s ease; }
+.env[data-open="true"] .note { grid-template-rows: 1fr; }
+.env .note > div { overflow: hidden; }
+.env .note p { padding: 0 1.2rem 1.2rem; color: var(--text); }
+
+/* finale */
+.finale { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; padding-bottom: 2rem; }
+.cake { position: relative; width: 12rem; height: 9rem; display: flex; align-items: flex-end; justify-content: center; }
+.tier { position: absolute; bottom: 0; width: 100%; height: 3.4rem; background: var(--deep); border: 1px solid var(--line); border-radius: 0.8rem; }
+.tier.t2 { bottom: 3.4rem; width: 70%; height: 2.6rem; background: var(--navy); }
+.tier::after { content: ''; position: absolute; left: 0; right: 0; top: 0.7rem; height: 0.35rem; background: var(--accent); opacity: 0.6; border-radius: 99px; }
+.candle { position: absolute; bottom: 6rem; width: 0.55rem; height: 2.2rem; background: var(--glow); border-radius: 3px; }
+.flame { position: absolute; left: 50%; bottom: 100%; width: 0.9rem; height: 1.4rem; margin-left: -0.45rem; margin-bottom: 0.2rem; background: radial-gradient(ellipse at 50% 75%, #fff 0 18%, var(--flame) 45%, rgba(255,150,60,0.0) 75%); border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%; filter: drop-shadow(0 0 14px var(--flame)); transform-origin: 50% 100%; animation: flick 1.2s ease-in-out infinite alternate; transition: opacity .4s, transform .4s; }
+.out .flame { opacity: 0; transform: scale(0.2) translateY(-0.4rem); animation: none; }
+@keyframes flick { from { transform: scale(1, 1) rotate(-3deg); } to { transform: scale(0.92, 1.1) rotate(3deg); } }
+.finale h2 { font-size: clamp(2rem, 8vw, 3.4rem); font-weight: 800; }
+.finale .after { display: none; flex-direction: column; gap: 1rem; align-items: center; max-width: 34rem; }
+.out ~ .after, .after.show { display: flex; }
+footer { color: var(--muted); font-size: 0.9rem; text-align: center; }
+
+@media (max-width: 30rem) {
+  main { gap: 4rem; }
+  .reels { gap: 0.7rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card .inner, .env .note, .env .chev, .btn { transition: none; }
+  .flame { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<main>
+  <header class="hero">
+    <span class="eyebrow">11 October · 21 today</span>
+    <div class="orb"><img src="judith.jpg" alt="Photo of the birthday girl, smiling with her hand on her cheek"></div>
+    <h1>Happy Birthday <span class="name" data-name>Judith</span></h1>
+    <p class="sub">I could have just sent a text. But you're not a text kind of person, so I built you a whole website. Scroll down, there's a lot in here for you.</p>
+    <button class="btn" id="party" type="button">Start the party</button>
+  </header>
+
+  <section aria-labelledby="reels-h">
+    <div class="head">
+      <span class="eyebrow">Clips</span>
+      <h2 id="reels-h">Just you being you</h2>
+    </div>
+    <div class="reels">
+      <figure class="reel">
+        <video controls playsinline preload="metadata" src="clip1.mp4"></video>
+        <figcaption>The red dress clip. Main character, obviously.</figcaption>
+      </figure>
+      <figure class="reel">
+        <video controls playsinline preload="metadata" src="clip2.mp4"></video>
+        <figcaption>Zebra print and all that confidence.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="letter" aria-labelledby="letter-h">
+    <span class="eyebrow">A letter from me</span>
+    <h2 id="letter-h">Happy birthday, <span data-name>Judith</span>.</h2>
+    <p>I thought about what to get you and nothing felt big enough, so I made this instead. It's not perfect and I built it in one night, but every word is from me.</p>
+    <p>You've been there on the good days and the stressful ones. You show up, you keep it real with me, and you make normal days feel better. I don't say it enough, so I'm saying it here where you can read it as many times as you want.</p>
+    <p>Twenty-one is a big one. You are stepping into it already doing things your own way, and I love watching that.</p>
+    <p>I hope this new year gives you everything you've been working for. You deserve all of it, and I'll be right here cheering the loudest.</p>
+    <p>Love you, best friend. Enjoy your day. Eat well, rest well, and don't let anybody stress you today.</p>
+    <p class="sign">John</p>
+  </section>
+
+  <section aria-labelledby="why-h">
+    <div class="head">
+      <span class="eyebrow">Tap a card</span>
+      <h2 id="why-h">Why you're amazing</h2>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section aria-labelledby="twenty-h">
+    <div class="head">
+      <span class="eyebrow">One for every year</span>
+      <h2 id="twenty-h">21 things I love about you</h2>
+    </div>
+    <ol class="list21" id="list21"></ol>
+  </section>
+
+  <section aria-labelledby="open-h">
+    <div class="head">
+      <span class="eyebrow">Keep this page</span>
+      <h2 id="open-h">Open when...</h2>
+    </div>
+    <div class="mail" id="mail"></div>
+  </section>
+
+  <section class="finale" id="finale" aria-labelledby="wish-h">
+    <span class="eyebrow">Last one</span>
+    <h2 id="wish-h">Make a wish</h2>
+    <div class="cake" id="cake" aria-hidden="true">
+      <div class="tier"></div><div class="tier t2"></div>
+      <div class="candle"><div class="flame"></div></div>
+    </div>
+    <button class="btn" id="blow" type="button">Blow out the candle</button>
+    <div class="after" id="after">
+      <h2>Whatever you wished for, I'm behind it.</h2>
+      <p>Happy birthday, <span data-name>Judith</span>. Here's to a new year that treats you well.</p>
+      <button class="btn ghost" id="again" type="button">Celebrate again</button>
+    </div>
+  </section>
+
+  <footer>Made by John, for you.</footer>
+</main>
+
+<script>
+(function () {
+  var NAME = 'Judith';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-name]').forEach(function (e) { e.textContent = NAME; });
+
+  /* cards */
+  var reasons = [
+    ['You show up', 'When it matters, you are there. No excuses, no drama, no making me beg.'],
+    ['You keep it real', 'You tell me the truth even when I do not want to hear it. That is why I trust you.'],
+    ['You make it fun', 'Any boring day turns into a story the moment you join it.'],
+    ['You have my back', 'I never have to wonder which side you are on. It is always mine.'],
+    ['You keep going', 'I have watched you work hard and push through. I am proud of you.'],
+    ['You have style', 'You walk in like every day is an event, and somehow you always pull it off.'],
+    ['You celebrate people', 'When something good happens to someone you love, you hype them like it happened to you.'],
+    ['You are easy to talk to', 'I can say anything to you and not feel judged. Not everybody gives that.'],
+    ['You are family', 'Best friend is not even a big enough word for what you are to me.']
+  ];
+  var cards = document.getElementById('cards');
+  reasons.forEach(function (r) {
+    var b = document.createElement('button');
+    b.className = 'card'; b.type = 'button'; b.setAttribute('aria-pressed', 'false');
+    b.innerHTML = '<div class="inner"><div class="face front"><span>Reason</span><h3></h3></div><div class="face back"><p></p></div></div>';
+    b.querySelector('h3').textContent = r[0];
+    b.querySelector('.back p').textContent = r[1];
+    b.addEventListener('click', function () { b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); });
+    cards.appendChild(b);
+  });
+
+  /* envelopes */
+  var notes = [
+    ['...you need a laugh', 'Remember the last time we could not stop laughing and nobody else understood why? Go back to that. You are funny, and you make everyone around you lighter.'],
+    ['...you are stressed', 'Breathe. You have handled harder things than this and came out stronger. Drink some water, take a break, and call me if you want to rant. I will just listen.'],
+    ['...you doubt yourself', 'Stop. You are smarter, stronger and more capable than you give yourself credit for. I see it and I am not the only one.'],
+    ['...you miss me', 'I am one call away. Always. Send me a message right now and I will reply.'],
+    ['...you get good news', 'Come and tell me first. Then we celebrate properly, with food. I mean it.'],
+    ['...you cannot sleep', 'Put the phone down for a minute and let your mind rest. Whatever it is will look smaller in the morning. You are going to be fine.']
+  ];
+  var mail = document.getElementById('mail');
+  notes.forEach(function (n) {
+    var d = document.createElement('div');
+    d.className = 'env'; d.setAttribute('data-open', 'false');
+    d.innerHTML = '<button type="button" aria-expanded="false"><span></span><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button><div class="note"><div><p></p></div></div>';
+    d.querySelector('button span').textContent = 'Open when you ' + n[0].replace('...you ', '');
+    d.querySelector('.note p').textContent = n[1];
+    var btn = d.querySelector('button');
+    btn.addEventListener('click', function () {
+      var open = d.getAttribute('data-open') === 'true';
+      d.setAttribute('data-open', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+    mail.appendChild(d);
+  });
+
+  /* 21 list */
+  var loves = [
+    'You are the first person I want to tell good news.',
+    'Your laugh is loud and I would not change it.',
+    'You never make me feel small.',
+    'You dress like every day is an occasion.',
+    'You say what you mean.',
+    'You are loyal, and I never have to guess.',
+    'You always bring the energy.',
+    'You remember the small things.',
+    'You can turn a bad day around in five minutes.',
+    'You are braver than you think.',
+    'You are easy to talk to about anything.',
+    'You celebrate people properly.',
+    'You do not fake it with me.',
+    'You make me want to be a better friend.',
+    'You are growing up and still completely yourself.',
+    'You are strong, and you deserve softness too.',
+    'You are a real one.',
+    'You hype me when I doubt myself.',
+    'You are my person to call.',
+    'You make any place feel like home.',
+    'You are only getting started.'
+  ];
+  var ol = document.getElementById('list21');
+  loves.forEach(function (s) { var li = document.createElement('li'); li.textContent = s; ol.appendChild(li); });
+
+  /* stars */
+  var sc = document.getElementById('stars'), sx = sc.getContext('2d'), stars = [];
+  function sizeStars() {
+    var r = window.devicePixelRatio || 1;
+    sc.width = innerWidth * r; sc.height = innerHeight * r;
+    sx.setTransform(r, 0, 0, r, 0, 0);
+    stars = [];
+    var n = Math.round(innerWidth * innerHeight / 9000);
+    for (var i = 0; i < n; i++) stars.push({ x: Math.random() * innerWidth, y: Math.random() * innerHeight, r: Math.random() * 1.3 + 0.3, p: Math.random() * 6.28, s: Math.random() * 0.02 + 0.005 });
+  }
+  function drawStars() {
+    sx.clearRect(0, 0, innerWidth, innerHeight);
+    stars.forEach(function (s) {
+      s.p += s.s;
+      var a = reduce ? 0.6 : 0.35 + 0.45 * Math.abs(Math.sin(s.p));
+      sx.fillStyle = 'rgba(190,212,255,' + a + ')';
+      sx.beginPath(); sx.arc(s.x, s.y, s.r, 0, 6.283); sx.fill();
+    });
+    if (!reduce) requestAnimationFrame(drawStars);
+  }
+  sizeStars(); drawStars();
+  addEventListener('resize', function () { sizeStars(); if (reduce) drawStars(); });
+
+  /* confetti */
+  var cc = document.getElementById('confetti'), cx = cc.getContext('2d'), bits = [], running = false;
+  function sizeConf() { cc.width = innerWidth; cc.height = innerHeight; }
+  sizeConf(); addEventListener('resize', sizeConf);
+  var colors = ['#a9c6ff', '#6c9bff', '#ffffff', '#ffc46b', '#3d6fe0'];
+  function burst(n) {
+    if (reduce) return;
+    for (var i = 0; i < n; i++) {
+      var side = i % 2 ? 1 : -1;
+      bits.push({ x: innerWidth / 2 + side * innerWidth * 0.3 * Math.random(), y: innerHeight * 0.62, vx: (Math.random() - 0.5) * 12, vy: -Math.random() * 16 - 6, w: Math.random() * 7 + 4, h: Math.random() * 4 + 3, a: Math.random() * 6.28, va: (Math.random() - 0.5) * 0.4, c: colors[(Math.random() * colors.length) | 0], life: 0 });
+    }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  }
+  function tick() {
+    cx.clearRect(0, 0, cc.width, cc.height);
+    bits = bits.filter(function (b) { return b.y < cc.height + 20 && b.life < 260; });
+    bits.forEach(function (b) {
+      b.life++; b.vy += 0.38; b.vx *= 0.99; b.x += b.vx; b.y += b.vy; b.a += b.va;
+      cx.save(); cx.translate(b.x, b.y); cx.rotate(b.a); cx.fillStyle = b.c; cx.fillRect(-b.w / 2, -b.h / 2, b.w, b.h); cx.restore();
+    });
+    if (bits.length) requestAnimationFrame(tick); else { running = false; cx.clearRect(0, 0, cc.width, cc.height); }
+  }
+  document.getElementById('party').addEventListener('click', function () { burst(160); });
+  setTimeout(function () { burst(90); }, 600);
+
+  /* candle */
+  var cake = document.getElementById('cake'), blow = document.getElementById('blow'), after = document.getElementById('after');
+  blow.addEventListener('click', function () {
+    cake.classList.add('out'); after.classList.add('show'); blow.hidden = true;
+    burst(220);
+    after.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  });
+  document.getElementById('again').addEventListener('click', function () { burst(220); });
+})();
+</script>
+</body>
+</html>
